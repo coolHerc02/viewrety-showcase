@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="ViewRety: a code review platform in development. Explore the public portfolio, fictional review, design previews and roadmap.">
+  <meta name="color-scheme" content="light dark">
+  <title>ViewRety — a second set of eyes</title>
+  <link rel="stylesheet" href="assets/showcase.css">
+  <script src="assets/showcase.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <a class="brand" href="#main" aria-label="ViewRety home"><span class="brand-mark" aria-hidden="true">V</span>ViewRety</a>
+    <nav aria-label="Main navigation"><a href="#review">Sample review</a><a href="#design">Design</a><a href="#roadmap">Roadmap</a></nav>
+    <button id="theme-toggle" class="theme-toggle" type="button" aria-pressed="false">Dark theme</button>
+  </header>
+  <main id="main">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <span class="eyebrow"><span class="status-dot" aria-hidden="true"></span>IN DEVELOPMENT · PUBLIC SHOWCASE</span>
+        <h1 id="hero-title">A second set of eyes.<br><span>A clearer way forward.</span></h1>
+        <p class="hero-description">Find the changes that deserve attention — and understand why they matter. A code review platform for individual developers and small teams using GitHub.</p>
+        <div class="hero-actions"><a class="button primary" href="#review">Explore a sample review <span aria-hidden="true">↗</span></a><a class="button secondary" href="https://github.com/coolHerc02/viewrety-showcase">View on GitHub</a></div>
+        <p class="fine-print">Fictional examples. No sign-in, AI calls or repository access.</p>
+      </div>
+      <aside class="intro-card" aria-label="The review approach">
+        <p class="eyebrow">A FINDING SHOULD TELL YOU</p>
+        <ol class="approach-list">
+          <li><span>01</span><div><h2>What changed?</h2><p>Evidence tied to a specific file and line.</p></div></li>
+          <li><span>02</span><div><h2>Why does it matter?</h2><p>A clear explanation of the potential impact.</p></div></li>
+          <li><span>03</span><div><h2>What should I do?</h2><p>A concrete recommendation you can assess.</p></div></li>
+        </ol>
+        <div class="card-note">Evidence → Impact → Recommendation</div>
+      </aside>
+    </section>
+
+    <section id="review" class="section" aria-labelledby="review-title">
+      <div class="section-heading"><div><p class="eyebrow">EXPLORE THE EXPERIENCE</p><h2 id="review-title">Less noise. More context.</h2></div><span class="pill neutral">Interactive illustration</span></div>
+      <p class="section-intro">An independent, prewritten example of the intended review experience. Filters and details work locally; no code is analyzed.</p>
+      <div class="review-shell">
+        <div class="review-header"><div><p class="repository-label">EXAMPLE REPOSITORY · ACME / STOREFRONT</p><h3>Add workspace invitations <span>#42</span></h3><p class="review-meta">TypeScript · 3 files changed · Example pull request</p></div><span class="pill success">Sample results</span></div>
+        <div class="review-toolbar"><div role="group" aria-label="Filter findings by severity" class="filters"><button type="button" class="filter active" data-severity="all" aria-pressed="true">All <span>3</span></button><button type="button" class="filter" data-severity="high" aria-pressed="false">High <span>1</span></button><button type="button" class="filter" data-severity="medium" aria-pressed="false">Medium <span>1</span></button><button type="button" class="filter" data-severity="low" aria-pressed="false">Low <span>1</span></button></div><p id="finding-count" role="status" aria-live="polite">3 findings</p></div>
+        <div class="findings">
+          <details class="finding" data-severity="high" open>
+            <summary><span class="severity high">High</span><span class="finding-title">Check workspace ownership before inviting a member<small>Security · src/invitations.ts:18</small></span><span class="expand-icon" aria-hidden="true">+</span></summary>
+            <div class="finding-body"><div class="finding-explanation"><div><h4>Evidence</h4><p>The example handler accepts a workspace ID from the request and creates an invitation before checking whether the caller owns that workspace.</p></div><div><h4>Impact</h4><p>A signed-in user could attempt to invite someone into another workspace.</p></div><div><h4>Recommendation</h4><p>Check the caller's membership and invitation permission before creating the invitation. Add a negative test for a caller from a different workspace.</p></div></div><pre aria-label="Fictional TypeScript code example"><code><span class="code-comment">// Illustrative example — not application source</span>
+const { workspaceId, email } = request.body;
+<span class="code-highlight">await invitations.create({ workspaceId, email });</span></code></pre></div>
+          </details>
+          <details class="finding" data-severity="medium">
+            <summary><span class="severity medium">Medium</span><span class="finding-title">Make repeated invitations idempotent<small>Reliability · src/invitations.ts:26</small></span><span class="expand-icon" aria-hidden="true">+</span></summary>
+            <div class="finding-body"><div class="finding-explanation"><div><h4>Evidence</h4><p>The example creates a new active invitation for every repeated submission.</p></div><div><h4>Impact</h4><p>A retried request can create duplicate invitations and repeated notifications.</p></div><div><h4>Recommendation</h4><p>Define one active invitation per workspace and normalized email. Handle repeated requests consistently and verify concurrent submissions.</p></div></div></div>
+          </details>
+          <details class="finding" data-severity="low">
+            <summary><span class="severity low">Low</span><span class="finding-title">Explain an expired invitation<small>User experience · src/accept-invitation.ts:34</small></span><span class="expand-icon" aria-hidden="true">+</span></summary>
+            <div class="finding-body"><div class="finding-explanation"><div><h4>Evidence</h4><p>The example acceptance screen shows a generic error when the invitation has expired.</p></div><div><h4>Impact</h4><p>The recipient cannot tell whether to retry or ask for a new invitation.</p></div><div><h4>Recommendation</h4><p>Show an explicit expired state and explain how to request another invitation without revealing private workspace information.</p></div></div></div>
+          </details>
+        </div>
+        <div class="review-footnote">Synthetic findings · These sample results cannot approve a real pull request.</div>
+      </div>
+    </section>
+
+    <section id="design" class="section" aria-labelledby="design-title">
+      <div class="section-heading"><div><p class="eyebrow">DESIGNED AROUND THE DEVELOPER</p><h2 id="design-title">A focused start.</h2></div><span class="pill neutral">Figma design previews</span></div>
+      <p class="section-intro">A clear entry point, an explanation of GitHub access, and a deliberate repository selection. The images show design examples, not a live connection.</p>
+      <figure class="desktop-preview"><img src="assets/welcome-desktop.png" alt="ViewRety desktop welcome design with GitHub sign-in and demo entry" width="1440" height="960" loading="lazy"><figcaption>01 / Welcome — sign in or explore the demo first.</figcaption></figure>
+      <div class="mobile-gallery"><figure><img src="assets/access-mobile.png" alt="Mobile GitHub access explanation design" width="390" height="1100" loading="lazy"><figcaption>02 / Explain what repository access is for.</figcaption></figure><figure><img src="assets/selection-mobile.png" alt="Mobile selection design with fictional repositories" width="390" height="1158" loading="lazy"><figcaption>03 / Choose the repositories to connect.</figcaption></figure><aside class="design-notes"><p class="eyebrow">SMALL DETAILS, CLEAR INTENT</p><h3>Useful before the first review.</h3><p>GitHub identity and repository access are separate steps. The onboarding makes that distinction visible.</p><ul><li>A personal workspace first</li><li>Selected repositories only</li><li>Desktop and mobile layouts</li><li>Clear sample and failure states</li></ul><p class="fine-print">Example identities and repositories are fictional. GitHub Checks and review publishing are planned capabilities.</p></aside></div>
+    </section>
+
+    <section class="section engineering" aria-labelledby="engineering-title"><div><p class="eyebrow">BUILT WITH INTENTION</p><h2 id="engineering-title">A modular foundation.</h2><p>Next.js and TypeScript on the frontend. Java 25, Spring Boot and Spring Modulith on the backend. PostgreSQL with explicit migrations and workspace ownership.</p><a class="text-link" href="docs/ARCHITECTURE.md">Read the architecture notes <span aria-hidden="true">↗</span></a></div><div class="engineering-grid"><article><h3>Trust boundaries</h3><p>Separate identity, repository access and signed webhook delivery.</p></article><article><h3>Reliable events</h3><p>Persist webhook deliveries and handle duplicates before analysis.</p></article><article><h3>Visible outcomes</h3><p>A failed or incomplete review must stay visibly distinct from success.</p></article><article><h3>Verification</h3><p>Module, database, API contract and browser checks in the development projects.</p></article></div></section>
+
+    <section id="roadmap" class="section" aria-labelledby="roadmap-title"><div class="section-heading"><div><p class="eyebrow">WHERE THE PROJECT STANDS</p><h2 id="roadmap-title">From foundation to useful reviews.</h2></div></div><div class="roadmap-grid"><article><span class="pill success">Development foundation</span><h3>UI, data and GitHub</h3><p>Sample review demo, onboarding, a development GitHub App, repository settings and webhook ingestion exist in the private application.</p></article><article><span class="pill next">Next</span><h3>A complete local pipeline</h3><p>Queue, worker, current-head diff, deterministic analysis adapter, real review states and an authenticated dashboard.</p></article><article><span class="pill neutral">Later</span><h3>Quality, alpha and hosting</h3><p>Evaluate AI quality and cost, add GitHub Checks, invite early users and choose sustainable infrastructure.</p></article></div><p class="roadmap-note">Active development. No paid AI analysis, production deployment or successful merge gate is being claimed. <a href="docs/ROADMAP.md">Read the roadmap →</a></p></section>
+  </main>
+  <footer><a class="brand" href="#main"><span class="brand-mark" aria-hidden="true">V</span>ViewRety</a><p>A portfolio showcase by <a href="https://github.com/coolHerc02">coolHerc02</a>.</p><a href="https://github.com/coolHerc02/viewrety-showcase">Project repository ↗</a></footer>
+</body>
+</html>
